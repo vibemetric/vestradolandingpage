@@ -117,7 +117,7 @@
     .risk-strip strong { color: #2D5C2E; }
 
     /* ═══════════════════════════════════════════
-       HEADER – logo image + smart hide/show
+       HEADER – logo image
     ═══════════════════════════════════════════ */
     .lp-header {
       position: sticky;
@@ -132,13 +132,6 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); /* Mượt mà */
-      will-change: transform; /* Tối ưu hiệu suất */
-    }
-
-    /* Class ẩn header – trượt lên hoàn toàn */
-    .lp-header.header-hidden {
-      transform: translateY(-100%);
     }
 
     .lp-header .logo img {
@@ -940,6 +933,16 @@
       .mobile-cta-bar { display: block; }
       .lp-footer { padding-bottom: 80px; }
       .header-cta { display: none; }
+
+      /* ===== SMART STICKY HEADER (MOBILE ONLY) ===== */
+      .lp-header {
+        transition: transform var(--transition);
+        will-change: transform;
+        transform: translateY(0);
+      }
+      .lp-header.header-hidden {
+        transform: translateY(-100%);
+      }
     }
 
     @media (max-width: 480px) {
@@ -960,7 +963,7 @@
 </div>
 
 <!-- ══════════════════════════════════
-     HEADER – Logo image (now with smart hide)
+     HEADER – Logo image
 ══════════════════════════════════ -->
 <header class="lp-header">
   <div class="logo">
@@ -1401,10 +1404,10 @@
 </div>
 
 <!-- ══════════════════════════════════
-     JAVASCRIPT (live ticker + smart header + observer)
+     JAVASCRIPT (existing + smart header)
 ══════════════════════════════════ -->
 <script>
-  // --- Live ticker simulation (unchanged) ---
+  // Live ticker simulation (unchanged)
   const prices = {
     p1: { val: 1.08542, dp: 5 },
     p2: { val: 1.26831, dp: 5 },
@@ -1436,52 +1439,7 @@
   }
   setInterval(updateTicker, 1800);
 
-  // --- SMART STICKY HEADER (ẩn/hiện khi cuộn) ---
-  (function() {
-    const header = document.querySelector('.lp-header');
-    if (!header) return;
-
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-    const scrollThreshold = 20; // chỉ ẩn khi cuộn xuống ít nhất 20px
-    const headerHiddenClass = 'header-hidden';
-
-    function updateHeader() {
-      const currentScrollY = window.scrollY;
-      
-      // Nếu ở đầu trang, luôn hiện header
-      if (currentScrollY < 10) {
-        header.classList.remove(headerHiddenClass);
-        lastScrollY = currentScrollY;
-        ticking = false;
-        return;
-      }
-
-      // Xác định hướng cuộn
-      if (currentScrollY > lastScrollY + 5) {
-        // Cuộn xuống: ẩn header
-        header.classList.add(headerHiddenClass);
-      } else if (currentScrollY < lastScrollY - 5) {
-        // Cuộn lên: hiện header
-        header.classList.remove(headerHiddenClass);
-      }
-      
-      lastScrollY = currentScrollY;
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        window.requestAnimationFrame(updateHeader);
-        ticking = true;
-      }
-    }, { passive: true });
-
-    // Đảm bảo trạng thái đúng khi tải lại trang ở vị trí không đầu
-    updateHeader();
-  })();
-
-  // --- Intersection Observer cho hiệu ứng fade-in (giữ nguyên) ---
+  // Intersection Observer for scroll-fade-in
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -1496,6 +1454,63 @@
     el.style.cssText += 'opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;';
     observer.observe(el);
   });
+
+  // ===== SMART STICKY HEADER (mobile only) =====
+  (function() {
+    'use strict';
+    const header = document.querySelector('.lp-header');
+    if (!header) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    let headerHeight = header.offsetHeight;
+    const threshold = 10; // px to avoid flickering
+
+    function updateHeader() {
+      // Apply only on mobile (max-width 768px)
+      if (window.innerWidth > 768) {
+        header.classList.remove('header-hidden');
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      
+      // Scroll down: hide header after scrolling past header height + threshold
+      if (currentScrollY > lastScrollY + threshold && currentScrollY > headerHeight) {
+        header.classList.add('header-hidden');
+      }
+      // Scroll up: show header
+      else if (currentScrollY < lastScrollY - threshold) {
+        header.classList.remove('header-hidden');
+      }
+      // At the very top: ensure header is visible
+      else if (currentScrollY <= 0) {
+        header.classList.remove('header-hidden');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }
+
+    function onResize() {
+      headerHeight = header.offsetHeight;
+      // Re-evaluate on resize (e.g. orientation change)
+      updateHeader();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+
+    // Initial check (in case page loads scrolled)
+    updateHeader();
+  })();
 </script>
 </body>
 </html>
