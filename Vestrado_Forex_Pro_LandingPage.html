@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Forex with 0.0 Pip Spreads | Vestrado – CySEC Regulated Broker</title>
+  <meta name="description" content="Trade 60+ Forex pairs with spreads from 0.0 pip and leverage up to 1:500. CySEC regulated. Start trading from $50. Join 600,000+ traders worldwide.">
+  <meta name="robots" content="noindex,follow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════════════
+       DESIGN TOKENS — WAR ROOM DARK SYSTEM
+    ══════════════════════════════════════════════ */
+    :root {
+      /* Core Palette */
+      --bg:           #060D06;
+      --bg-mid:       #080F08;
+      --surface:      rgba(13,26,13,0.72);
+      --surface-solid:#0D1A0D;
+      --surface-hover:rgba(18,36,18,0.88);
+      --border:       rgba(154,234,0,0.13);
+      --border-hover: rgba(154,234,0,0.45);
+      --border-subtle:rgba(255,255,255,0.06);
+
+      /* Brand Colors */
+      --lime:         #9AEA00;
+      --lime-dim:     rgba(154,234,0,0.10);
+      --lime-glow:    rgba(154,234,0,0.35);
+      --lime-text:    rgba(154,234,0,0.85);
+      --green:        #00B800;
+      --green-light:  #22CC22;
+      --green-dim:    rgba(0,184,0,0.12);
+      --green-glow:   rgba(0,184,0,0.3);
+      --red:          #FF4444;
+      --red-dim:      rgba(255,68,68,0.12);
+
+      /* Typography */
+      --text:         #F0F8EC;
+      --text-muted:   #7A9E7B;
+      --text-faint:   #3D5C3E;
+      --text-bright:  #FFFFFF;
+
+      /* System */
+      --radius:       14px;
+      --radius-sm:    8px;
+      --radius-lg:    20px;
+      --transition:   0.26s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.16s ease;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ══════════════════════════════════════════════
+       ATMOSPHERIC BACKGROUND SYSTEM
+    ══════════════════════════════════════════════ */
+    .bg-atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+    }
+    .bg-orb-1 {
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, #9AEA00 0%, transparent 70%);
+      top: -300px; left: -200px;
+      animation: orbFloat1 25s ease-in-out infinite alternate;
+    }
+    .bg-orb-2 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #00B800 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+      opacity: 0.12;
+      animation: orbFloat2 30s ease-in-out infinite alternate;
+    }
+    .bg-orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #9AEA00 0%, transparent 70%);
+      top: 50%; right: 20%;
+      opacity: 0.07;
+      animation: orbFloat1 20s ease-in-out 5s infinite alternate;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(154,234,0,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(154,234,0,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
+    }
+
+    @keyframes orbFloat1 {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(80px, 60px) scale(1.15); }
+    }
+    @keyframes orbFloat2 {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-60px, -40px) scale(1.1); }
+    }
+
+    /* ══════════════════════════════════════════════
+       RISK STRIP
+    ══════════════════════════════════════════════ */
+    .risk-strip {
+      position: relative;
+      z-index: 100;
+      background: rgba(8,15,8,0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 7px 20px;
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .risk-strip strong { color: rgba(154,234,0,0.75); }
+
+    /* ══════════════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════════════ */
+    .lp-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(6,13,6,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform var(--transition);
+    }
+    .lp-header.header-hidden { transform: translateY(-100%); }
+
+    .lp-header .logo img {
+      height: 34px;
+      width: auto;
+      display: block;
+      filter: brightness(1.1);
+    }
+
+    .header-cta {
+      background: var(--lime);
+      color: #050A05;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13.5px;
+      padding: 9px 22px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+      display: inline-block;
+      box-shadow: 0 0 20px var(--lime-glow);
+    }
+    .header-cta:hover {
+      background: #ADFF00;
+      box-shadow: 0 0 32px rgba(154,234,0,0.55);
+      transform: translateY(-1px);
+    }
+
+    /* ══════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 28px 60px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--lime-dim);
+      border: 1px solid rgba(154,234,0,0.3);
+      border-radius: 40px;
+      padding: 6px 16px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--lime-text);
+      margin-bottom: 26px;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      background: var(--lime);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--lime);
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 8px var(--lime), 0 0 0 0 rgba(154,234,0,0.4); }
+      50%       { box-shadow: 0 0 12px var(--lime), 0 0 0 6px rgba(154,234,0,0); }
+    }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--text-bright);
+      margin-bottom: 22px;
+      letter-spacing: -0.5px;
+    }
+    .hero h1 .accent-lime {
+      color: var(--lime);
+      text-shadow: 0 0 30px rgba(154,234,0,0.5), 0 0 60px rgba(154,234,0,0.2);
+    }
+    .hero h1 .accent-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .hero h1 .accent-underline::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -5px;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--lime), rgba(154,234,0,0.3));
+      border-radius: 2px;
+      box-shadow: 0 0 12px var(--lime-glow);
+    }
+
+    .hero-desc {
+      font-size: 16.5px;
+      color: var(--text-muted);
+      margin-bottom: 34px;
+      line-height: 1.75;
+      max-width: 480px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 42px;
+      align-items: center;
+    }
+    .hero-stat { display: flex; flex-direction: column; }
+    .hero-stat .val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--lime);
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(154,234,0,0.35);
+    }
+    .hero-stat .lbl {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+    .hero-stat-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--border);
+      align-self: center;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* PRIMARY — Lime CTA */
+    .btn-primary {
+      background: var(--lime);
+      color: #040904;
+      font-weight: 700;
+      font-size: 15.5px;
+      padding: 16px 38px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-block;
+      box-shadow: 0 0 28px var(--lime-glow), 0 8px 24px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+      animation: ctaPulse 3s ease-in-out infinite;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-primary:hover::before { left: 150%; }
+    .btn-primary:hover {
+      background: #ADFF00;
+      box-shadow: 0 0 48px rgba(154,234,0,0.65), 0 12px 36px rgba(0,0,0,0.5);
+      transform: translateY(-2px);
+      animation: none;
+    }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 28px var(--lime-glow), 0 8px 24px rgba(0,0,0,0.4); }
+      50%       { box-shadow: 0 0 44px rgba(154,234,0,0.52), 0 8px 24px rgba(0,0,0,0.4); }
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 15px 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+      color: var(--lime);
+      background: var(--lime-dim);
+    }
+
+    .trust-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--text-faint);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trust-note svg { color: var(--lime); flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════════
+       HERO CHART VISUAL (WAR ROOM)
+    ══════════════════════════════════════════════ */
+    .hero-visual {
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .chart-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow:
+        0 0 0 1px rgba(154,234,0,0.06),
+        0 32px 80px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .chart-container::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--lime) 40%, var(--green) 70%, transparent 100%);
+      opacity: 0.7;
+    }
+
+    .chart-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .chart-pair-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chart-pair-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      letter-spacing: 0.5px;
+    }
+    .chart-pair-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--lime);
+    }
+    .chart-change-badge {
+      background: rgba(154,234,0,0.12);
+      border: 1px solid rgba(154,234,0,0.25);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--lime);
+    }
+    .live-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(0,184,0,0.1);
+      border: 1px solid rgba(0,184,0,0.25);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--green-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .live-pill .dot {
+      width: 5px; height: 5px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--green);
+      animation: pulseDot 1.5s infinite;
+    }
+
+    /* SVG Chart Canvas */
+    .chart-canvas-wrap {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      margin: 8px 0;
+    }
+    .chart-svg { width: 100%; height: 100%; }
+
+    /* Animated line chart path */
+    .chart-line {
+      fill: none;
+      stroke: var(--lime);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 6px rgba(154,234,0,0.6));
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      animation: drawLine 2s ease 0.8s forwards;
+    }
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+    .chart-area {
+      fill: url(#chartGradient);
+      opacity: 0;
+      animation: fadeIn 0.5s ease 2.6s forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* Candlesticks */
+    .candle-bull { fill: var(--lime); }
+    .candle-bear { fill: var(--red); }
+    .candle-wick-bull { stroke: var(--lime); stroke-width: 1.5; }
+    .candle-wick-bear { stroke: var(--red); stroke-width: 1.5; }
+
+    /* Chart overlay numbers */
+    .chart-price-labels {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 9.5px;
+      color: var(--text-faint);
+      font-family: 'Barlow Condensed', sans-serif;
+      text-align: right;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 4px 0;
+    }
+
+    /* Ticker rows below chart */
+    .chart-ticker-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .ticker-row-mini {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color var(--transition-fast);
+    }
+    .ticker-row-mini:hover { border-color: var(--border); }
+    .trm-pair {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--text-bright);
+    }
+    .trm-spread {
+      font-size: 10px;
+      background: var(--green-dim);
+      color: var(--green-light);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-top: 3px;
+      display: inline-block;
+    }
+    .trm-right { text-align: right; }
+    .trm-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+    .trm-change {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-top: 2px;
+      display: inline-block;
+    }
+    .trm-change.up   { color: var(--lime); background: var(--lime-dim); }
+    .trm-change.down { color: var(--red);  background: var(--red-dim);  }
+
+    /* Metrics row */
+    .chart-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .chart-metric {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .chart-metric .m-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--lime);
+      line-height: 1;
+    }
+    .chart-metric .m-lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════════════════
+       HERO CONTENT ANIMATIONS
+    ══════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * {
+      opacity: 0;
+      animation: fadeUp 0.65s ease forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.08s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.18s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.28s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.38s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.46s; }
+    .hero-content > *:nth-child(6) { animation-delay: 0.54s; }
+
+    /* ══════════════════════════════════════════════
+       SECTION WRAPPER
+    ══════════════════════════════════════════════ */
+    .section {
+      padding: 88px 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .section-inner { max-width: 1160px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 14px;
+      padding: 4px 12px;
+      background: var(--lime-dim);
+      border: 1px solid rgba(154,234,0,0.2);
+      border-radius: 40px;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      font-weight: 900;
+      color: var(--text-bright);
+      line-height: 1.05;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+    .section-title .lime { color: var(--lime); text-shadow: 0 0 24px rgba(154,234,0,0.3); }
+    .section-subtitle {
+      font-size: 16.5px;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 56px; }
+
+    /* ══════════════════════════════════════════════
+       GLASSMORPHISM CARD BASE
+    ══════════════════════════════════════════════ */
+    .glass-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .glass-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 0 28px var(--lime-glow), 0 16px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: linear-gradient(90deg, transparent, var(--lime), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .glass-card:hover::before { opacity: 1; }
+    .glass-card { position: relative; overflow: hidden; }
+
+    /* ══════════════════════════════════════════════
+       BENEFITS SECTION
+    ══════════════════════════════════════════════ */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .benefit-card {
+      padding: 30px 26px;
+    }
+
+    .benefit-icon {
+      width: 52px; height: 52px;
+      background: var(--lime-dim);
+      border: 1px solid rgba(154,234,0,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--lime);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .benefit-card:hover .benefit-icon {
+      background: rgba(154,234,0,0.18);
+      box-shadow: 0 0 20px var(--lime-glow);
+    }
+    .benefit-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+      letter-spacing: 0.2px;
+    }
+    .benefit-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .benefit-highlight {
+      margin-top: 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--lime);
+      text-shadow: 0 0 16px rgba(154,234,0,0.3);
+    }
+
+    /* ══════════════════════════════════════════════
+       TRADING CONDITIONS
+    ══════════════════════════════════════════════ */
+    .conditions-section {
+      background: linear-gradient(180deg, transparent 0%, rgba(154,234,0,0.025) 50%, transparent 100%);
+    }
+
+    .conditions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .conditions-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+    }
+    .conditions-table th {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 0 16px 10px;
+      text-align: left;
+    }
+    .conditions-table th:last-child { text-align: right; }
+    .conditions-table td {
+      padding: 14px 16px;
+      background: var(--surface);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 14px;
+      color: var(--text);
+      transition: background var(--transition-fast);
+    }
+    .conditions-table tr:hover td { background: var(--surface-hover); }
+    .conditions-table td:first-child {
+      border-radius: 10px 0 0 10px;
+      border-left: 1px solid var(--border-subtle);
+      font-weight: 600;
+    }
+    .conditions-table td:last-child {
+      border-radius: 0 10px 10px 0;
+      border-right: 1px solid var(--border-subtle);
+      text-align: right;
+    }
+    .val-lime {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--lime);
+    }
+
+    .specs-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .specs-list li {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(16px);
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+    }
+    .specs-list li:hover {
+      border-color: var(--border);
+      background: var(--surface-hover);
+    }
+    .spec-label { font-size: 13.5px; color: var(--text-muted); }
+    .spec-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+    .spec-val.lime { color: var(--lime); }
+
+    /* ══════════════════════════════════════════════
+       TRUST SECTION
+    ══════════════════════════════════════════════ */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+    .trust-card { padding: 26px 20px; text-align: center; }
+
+    .trust-icon-wrap {
+      width: 58px; height: 58px;
+      background: var(--lime-dim);
+      border: 1px solid rgba(154,234,0,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--lime);
+      transition: box-shadow var(--transition), background var(--transition);
+    }
+    .trust-card:hover .trust-icon-wrap {
+      box-shadow: 0 0 20px var(--lime-glow);
+      background: rgba(154,234,0,0.16);
+    }
+    .trust-card h4 { font-weight: 700; font-size: 14.5px; color: var(--text-bright); margin-bottom: 7px; }
+    .trust-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Trustpilot Row */
+    .trustpilot-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px 40px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(20px);
+    }
+    .tp-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-bright);
+      letter-spacing: -1px;
+    }
+    .tp-logo span { color: #00B67A; }
+    .tp-rating { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .tp-stars { display: flex; gap: 4px; }
+    .tp-star {
+      width: 32px; height: 32px;
+      background: #00B67A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-size: 17px;
+      color: white;
+    }
+    .tp-star.half { background: rgba(0,182,122,0.35); }
+    .tp-score {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #00B67A;
+      line-height: 1;
+    }
+    .tp-label { font-size: 11.5px; color: var(--text-muted); }
+    .tp-divider { width: 1px; height: 56px; background: var(--border); }
+    .tp-stat { text-align: center; }
+    .tp-stat .big {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--lime);
+      line-height: 1;
+    }
+    .tp-stat .sm { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ══════════════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════════════ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .testi-card { padding: 28px; }
+    .testi-stars { color: #00B67A; font-size: 14px; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 22px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--lime-dim), var(--green-dim));
+      border: 1px solid rgba(154,234,0,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--lime);
+      flex-shrink: 0;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+    .testi-name { font-weight: 700; font-size: 14px; color: var(--text-bright); }
+    .testi-role { font-size: 11.5px; color: var(--text-muted); }
+
+    /* ══════════════════════════════════════════════
+       FINAL CTA
+    ══════════════════════════════════════════════ */
+    .final-cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 90% at center, rgba(154,234,0,0.07) 0%, transparent 70%),
+        radial-gradient(circle at 0% 50%, rgba(0,184,0,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 100% 50%, rgba(154,234,0,0.05) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .final-cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .final-cta-section .section-title { font-size: clamp(2.4rem, 5.5vw, 3.8rem); }
+    .final-cta-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 44px;
+      line-height: 1.7;
+    }
+
+    .cta-steps {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 52px;
+      position: relative;
+    }
+    .cta-steps::before {
+      content: '';
+      position: absolute;
+      top: 20px; left: 14%; right: 14%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .cta-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 180px;
+      z-index: 1;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      background: var(--lime);
+      color: #040904;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 16px;
+      box-shadow: 0 0 20px var(--lime-glow);
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+    .step-label { font-size: 13px; color: var(--text-muted); text-align: center; line-height: 1.4; font-weight: 500; }
+
+    .cta-box { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .btn-mega {
+      background: var(--lime);
+      color: #040904;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 20px 64px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-block;
+      box-shadow: 0 0 40px var(--lime-glow), 0 12px 40px rgba(0,0,0,0.5);
+      letter-spacing: 0.2px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-mega::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-mega:hover::before { left: 150%; }
+    .btn-mega:hover {
+      background: #ADFF00;
+      box-shadow: 0 0 64px rgba(154,234,0,0.7), 0 16px 56px rgba(0,0,0,0.6);
+      transform: translateY(-3px);
+    }
+    .demo-link {
+      font-size: 14px;
+      color: var(--text-muted);
+      border-bottom: 1px dashed var(--text-faint);
+      padding-bottom: 2px;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .demo-link:hover { color: var(--lime); border-color: var(--lime); }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    .lp-footer {
+      background: rgba(4,8,4,0.95);
+      padding: 40px 28px;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+    .footer-inner { max-width: 1160px; margin: 0 auto; }
+    .footer-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-regs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .reg-badge {
+      background: rgba(154,234,0,0.06);
+      border: 1px solid rgba(154,234,0,0.18);
+      border-radius: 6px;
+      padding: 5px 11px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--lime-text);
+    }
+    .disclaimer {
+      font-size: 11px;
+      color: var(--text-faint);
+      line-height: 1.75;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+    }
+    .disclaimer strong { color: var(--text-muted); }
+    .disclaimer a { color: var(--text-faint); transition: color var(--transition-fast); }
+    .disclaimer a:hover { color: var(--lime); }
+
+    /* ══════════════════════════════════════════════
+       STICKY MOBILE CTA
+    ══════════════════════════════════════════════ */
+    .mobile-cta-bar {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 300;
+      padding: 12px 16px;
+      background: rgba(6,13,6,0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(154,234,0,0.2);
+      box-shadow: 0 -4px 32px rgba(154,234,0,0.08);
+    }
+    .mobile-cta-bar .btn-primary {
+      width: 100%;
+      text-align: center;
+      display: block;
+      font-size: 15px;
+      padding: 15px;
+    }
+
+    /* ══════════════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-grid    { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero { padding: 60px 20px 100px; min-height: auto; }
+      .hero-inner { grid-template-columns: 1fr; gap: 44px; }
+      .hero h1 { font-size: 2.6rem; }
+      .hero-visual { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .conditions-grid { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .trustpilot-row { gap: 20px; padding: 24px; }
+      .tp-divider { display: none; }
+      .cta-steps { flex-wrap: wrap; gap: 20px; }
+      .cta-steps::before { display: none; }
+      .mobile-cta-bar { display: block; }
+      .lp-footer { padding-bottom: 84px; }
+      .header-cta { display: none; }
+      .lp-header {
+        transition: transform var(--transition);
+        will-change: transform;
+      }
+    }
+    @media (max-width: 480px) {
+      .section { padding: 60px 16px; }
+      .trust-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 18px; }
+      .hero-stat-divider { display: none; }
+      .btn-mega { padding: 18px 40px; font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ATMOSPHERE LAYER -->
+<div class="bg-atmosphere" aria-hidden="true">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     RISK WARNING STRIP
+══════════════════════════════════ -->
+<div class="risk-strip">
+  <strong>Risk Warning:</strong> Trading Forex and CFDs involves significant risk. <strong>76.4% of retail investor accounts lose money</strong> when trading CFDs with this provider. Please ensure you understand the risks.
+</div>
+
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<header class="lp-header">
+  <div class="logo">
+    <img src="https://vestrado.com/wp-content/uploads/2024/08/2024-VTR-logo-x2.png" alt="Vestrado" style="filter: brightness(1.15) saturate(1.1);">
+  </div>
+  <a href="https://my.vestrado.com/register/" class="header-cta">Start Trading Free →</a>
+</header>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- LEFT: COPY -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        CySEC Regulated · Segregated Client Funds
+      </div>
+
+      <h1>
+        Trade <span class="accent-lime">60+</span> Forex Pairs<br>
+        with <span class="accent-underline">0.0 Pip</span> Spreads
+      </h1>
+
+      <p class="hero-desc">
+        Access the global foreign exchange market through MetaTrader 5. Tight institutional-grade spreads, fast execution, and leverage up to 1:500. Open an account in minutes.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="val">0.0</span>
+          <span class="lbl">Spreads from (pip)</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="val">1:500</span>
+          <span class="lbl">Max Leverage</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="val">$50</span>
+          <span class="lbl">Min. Deposit</span>
+        </div>
+      </div>
+
+      <div class="hero-cta-group">
+        <a href="https://my.vestrado.com/register/" class="btn-primary">Open Live Account →</a>
+        <a href="https://my.vestrado.com/register/" class="btn-secondary">Try Free Demo</a>
+      </div>
+
+      <p class="trust-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        No credit card required · Instant account activation · 24/5 live support
+      </p>
+    </div>
+
+    <!-- RIGHT: WAR ROOM CHART -->
+    <div class="hero-visual">
+      <div class="chart-container">
+
+        <!-- Top Bar -->
+        <div class="chart-topbar">
+          <div class="chart-pair-label">
+            <div>
+              <div class="chart-pair-name">EUR / USD</div>
+              <div class="chart-pair-price" id="hero-price">1.08542</div>
+            </div>
+            <div class="chart-change-badge" id="hero-change">+0.12%</div>
+          </div>
+          <div class="live-pill">
+            <span class="dot"></span>
+            Live
+          </div>
+        </div>
+
+        <!-- SVG Line Chart -->
+        <div class="chart-canvas-wrap">
+          <svg class="chart-svg" viewBox="0 0 540 180" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9AEA00" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#9AEA00" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- Area fill -->
+            <path class="chart-area"
+              d="M0,120 C30,115 50,130 80,110 C110,90 130,105 160,85 C190,65 210,80 240,60 C270,40 290,55 320,42 C350,28 370,48 400,30 C430,12 450,35 480,20 C505,8 520,15 540,10 L540,180 L0,180 Z"/>
+
+            <!-- Line -->
+            <path class="chart-line" filter="url(#glow)"
+              d="M0,120 C30,115 50,130 80,110 C110,90 130,105 160,85 C190,65 210,80 240,60 C270,40 290,55 320,42 C350,28 370,48 400,30 C430,12 450,35 480,20 C505,8 520,15 540,10"/>
+
+            <!-- Current price dot -->
+            <circle cx="540" cy="10" r="5" fill="#9AEA00" filter="url(#glow)" opacity="0">
+              <animate attributeName="opacity" values="0;1" begin="2.8s" dur="0.3s" fill="freeze"/>
+            </circle>
+            <circle cx="540" cy="10" r="10" fill="none" stroke="#9AEA00" stroke-width="1.5" opacity="0">
+              <animate attributeName="opacity" values="0;0.5;0" begin="3s" dur="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="r" values="6;16;6" begin="3s" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- Y-axis price lines -->
+            <line x1="0" y1="40" x2="480" y2="40" stroke="rgba(154,234,0,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="0" y1="90" x2="480" y2="90" stroke="rgba(154,234,0,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="0" y1="140" x2="480" y2="140" stroke="rgba(154,234,0,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+          </svg>
+
+          <!-- Price labels -->
+          <div class="chart-price-labels">
+            <span>1.0882</span>
+            <span>1.0864</span>
+            <span>1.0847</span>
+            <span>1.0829</span>
+          </div>
+        </div>
+
+        <!-- Mini Ticker Grid -->
+        <div class="chart-ticker-grid">
+          <div class="ticker-row-mini">
+            <div>
+              <div class="trm-pair">GBP/USD</div>
+              <span class="trm-spread">Spread 0.2</span>
+            </div>
+            <div class="trm-right">
+              <div class="trm-price" id="p2">1.26831</div>
+              <span class="trm-change up" id="c2">−0.08%</span>
+            </div>
+          </div>
+          <div class="ticker-row-mini">
+            <div>
+              <div class="trm-pair">USD/JPY</div>
+              <span class="trm-spread">Spread 0.1</span>
+            </div>
+            <div class="trm-right">
+              <div class="trm-price" id="p3">149.421</div>
+              <span class="trm-change up" id="c3">+0.21%</span>
+            </div>
+          </div>
+          <div class="ticker-row-mini">
+            <div>
+              <div class="trm-pair">AUD/USD</div>
+              <span class="trm-spread">Spread 0.3</span>
+            </div>
+            <div class="trm-right">
+              <div class="trm-price" id="p4">0.65187</div>
+              <span class="trm-change down" id="c4">−0.05%</span>
+            </div>
+          </div>
+          <div class="ticker-row-mini">
+            <div>
+              <div class="trm-pair">USD/CAD</div>
+              <span class="trm-spread">Spread 0.4</span>
+            </div>
+            <div class="trm-right">
+              <div class="trm-price" id="p5">1.37259</div>
+              <span class="trm-change up" id="c5">+0.07%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="chart-metrics">
+          <div class="chart-metric">
+            <div class="m-val">600K+</div>
+            <div class="m-lbl">Active Traders</div>
+          </div>
+          <div class="chart-metric">
+            <div class="m-val">$2.5B+</div>
+            <div class="m-lbl">Monthly Volume</div>
+          </div>
+          <div class="chart-metric">
+            <div class="m-val">&lt;40ms</div>
+            <div class="m-lbl">Execution</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /hero-visual -->
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     KEY BENEFITS
+══════════════════════════════════ -->
+<section class="section benefits-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Why Vestrado</div>
+      <h2 class="section-title">Everything You Need to<br>Trade Forex with <span class="lime">Confidence</span></h2>
+      <p class="section-subtitle">From beginners to institutional traders – built for every level.</p>
+    </div>
+
+    <div class="benefits-grid">
+
+      <div class="benefit-card glass-card reveal">
+        <div class="benefit-icon">
+          <!-- Lightning bolt SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Ultra-Fast Execution</h3>
+        <p>Trades executed in under 40ms with no requotes. Your orders fill at the price you see.</p>
+        <div class="benefit-highlight">&lt;40ms</div>
+      </div>
+
+      <div class="benefit-card glass-card reveal">
+        <div class="benefit-icon">
+          <!-- Trending down SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+        </div>
+        <h3>Institutional Spreads</h3>
+        <p>EUR/USD spreads starting at 0.0 pip on Raw accounts. Transparent, no-hidden-cost pricing.</p>
+        <div class="benefit-highlight">0.0 pip</div>
+      </div>
+
+      <div class="benefit-card glass-card reveal">
+        <div class="benefit-icon">
+          <!-- Shield SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Regulated & Secure</h3>
+        <p>CySEC regulated (MiFID II compliant). Segregated client funds. Negative balance protection included.</p>
+        <div class="benefit-highlight">CySEC</div>
+      </div>
+
+      <div class="benefit-card glass-card reveal">
+        <div class="benefit-icon">
+          <!-- Monitor SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>MetaTrader 5 Platform</h3>
+        <p>Trade from desktop, browser or mobile app. Advanced charting, 80+ indicators, automated trading via Expert Advisors.</p>
+        <div class="benefit-highlight">MT5</div>
+      </div>
+
+      <div class="benefit-card glass-card reveal">
+        <div class="benefit-icon">
+          <!-- Globe SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>60+ Currency Pairs</h3>
+        <p>Majors, minors, and exotic pairs. Trade EUR/USD, GBP/USD, USD/JPY, and more 24 hours a day, 5 days a week.</p>
+        <div class="benefit-highlight">60+ Pairs</div>
+      </div>
+
+      <div class="benefit-card glass-card reveal">
+        <div class="benefit-icon">
+          <!-- Book open SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Free Trading Education</h3>
+        <p>Access Vestrado Academy: video courses, live webinars, and daily market analysis from in-house analysts.</p>
+        <div class="benefit-highlight">Academy</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TRADING CONDITIONS
+══════════════════════════════════ -->
+<section class="section conditions-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Trading Conditions</div>
+      <h2 class="section-title">Transparent Pricing.<br><span class="lime">Competitive Conditions.</span></h2>
+      <p class="section-subtitle">Compare our account types and find the best fit for your trading style.</p>
+    </div>
+
+    <div class="conditions-grid">
+      <div class="reveal">
+        <table class="conditions-table">
+          <thead>
+            <tr>
+              <th>Forex Pair</th>
+              <th>Spread From</th>
+              <th>Max Leverage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EUR/USD</td>
+              <td><span class="val-lime">0.0 pip</span></td>
+              <td>1:500</td>
+            </tr>
+            <tr>
+              <td>GBP/USD</td>
+              <td><span class="val-lime">0.2 pip</span></td>
+              <td>1:500</td>
+            </tr>
+            <tr>
+              <td>USD/JPY</td>
+              <td><span class="val-lime">0.1 pip</span></td>
+              <td>1:500</td>
+            </tr>
+            <tr>
+              <td>AUD/USD</td>
+              <td><span class="val-lime">0.3 pip</span></td>
+              <td>1:400</td>
+            </tr>
+            <tr>
+              <td>XAU/USD (Gold)</td>
+              <td><span class="val-lime">0.10</span></td>
+              <td>1:200</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reveal">
+        <ul class="specs-list">
+          <li><span class="spec-label">Minimum Deposit</span><span class="spec-val lime">$50</span></li>
+          <li><span class="spec-label">Account Currencies</span><span class="spec-val">USD, EUR, GBP</span></li>
+          <li><span class="spec-label">Execution Type</span><span class="spec-val">Market Execution</span></li>
+          <li><span class="spec-label">Swap-Free Accounts</span><span class="spec-val">✓ Available</span></li>
+          <li><span class="spec-label">Negative Balance Protection</span><span class="spec-val">✓ Included</span></li>
+          <li><span class="spec-label">Demo Account</span><span class="spec-val">✓ Free · Unlimited</span></li>
+          <li><span class="spec-label">Copy Trading</span><span class="spec-val">✓ Supported</span></li>
+          <li><span class="spec-label">Withdrawal Time</span><span class="spec-val">1–2 Business Days</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px; text-align: center;">
+      <a href="https://my.vestrado.com/register/" class="btn-primary">Open Account with $50 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TRUST SIGNALS
+══════════════════════════════════ -->
+<section class="section trust-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Why Traders Trust Us</div>
+      <h2 class="section-title">Built on Regulation,<br><span class="lime">Transparency & Security</span></h2>
+    </div>
+
+    <div class="trust-grid">
+
+      <div class="trust-card glass-card reveal">
+        <div class="trust-icon-wrap">
+          <!-- Columns/temple SVG -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+        </div>
+        <h4>CySEC Regulated</h4>
+        <p>Fully licensed under CySEC (MiFID II). Your investments are protected under EU regulatory framework.</p>
+      </div>
+
+      <div class="trust-card glass-card reveal">
+        <div class="trust-icon-wrap">
+          <!-- Lock SVG -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h4>Segregated Funds</h4>
+        <p>Client deposits are held separately from company funds in tier-1 banks. Your money stays yours.</p>
+      </div>
+
+      <div class="trust-card glass-card reveal">
+        <div class="trust-icon-wrap">
+          <!-- Shield check SVG -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <h4>Negative Balance Protection</h4>
+        <p>You can never lose more than you deposit. Our system protects accounts against extreme market events.</p>
+      </div>
+
+      <div class="trust-card glass-card reveal">
+        <div class="trust-icon-wrap">
+          <!-- Key SVG -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        </div>
+        <h4>SSL & 2FA Security</h4>
+        <p>256-bit SSL encryption and two-factor authentication on all accounts to safeguard your data and funds.</p>
+      </div>
+
+    </div>
+
+    <!-- Trustpilot block -->
+    <div class="trustpilot-row reveal">
+      <div class="tp-logo">Trust<span>pilot</span></div>
+      <div class="tp-rating">
+        <div class="tp-stars">
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+          <div class="tp-star half">★</div>
+        </div>
+        <span class="tp-score">4.7</span>
+        <span class="tp-label">out of 5</span>
+      </div>
+      <div class="tp-divider"></div>
+      <div class="tp-stat">
+        <div class="big counter" data-target="4857" data-suffix="">4,857</div>
+        <div class="sm">Verified Reviews</div>
+      </div>
+      <div class="tp-divider"></div>
+      <div class="tp-stat">
+        <div class="big counter" data-target="600" data-suffix="K+">600K+</div>
+        <div class="sm">Active Traders</div>
+      </div>
+      <div class="tp-divider"></div>
+      <div class="tp-stat">
+        <div class="big">10+</div>
+        <div class="sm">Years in Market</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════ -->
+<section class="section testimonials-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Real Traders. Real Results.</div>
+      <h2 class="section-title">What Our Forex Traders Say</h2>
+      <p class="section-subtitle">Verified feedback from the Vestrado trading community.</p>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testi-card glass-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The tight spreads on EUR/USD are genuinely unbeatable. After 5 years trading Forex, Vestrado offers the best execution speed and pricing I've experienced at any broker."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MJ</div>
+          <div>
+            <div class="testi-name">Michael Johnson</div>
+            <div class="testi-role">Professional Forex Trader</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card glass-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Started with the Demo Account and practiced for 2 months. The educational resources are excellent. Now trading real markets with solid risk management strategies."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SC</div>
+          <div>
+            <div class="testi-name">Sarah Chen</div>
+            <div class="testi-role">Forex Trader since 2023</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card glass-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Customer support is outstanding. They helped me understand leverage and choose the right account type. MT5 platform works flawlessly on mobile — I trade from anywhere."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RP</div>
+          <div>
+            <div class="testi-name">Rajesh Patel</div>
+            <div class="testi-role">Part-time Forex Trader</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FINAL CTA
+══════════════════════════════════ -->
+<section class="section final-cta-section">
+  <div class="section-inner">
+    <div class="final-cta-inner">
+      <div class="section-label" style="display:inline-block;margin:0 auto 16px;display:block;text-align:center;">Get Started Today</div>
+      <h2 class="section-title" style="text-align:center;">Start Trading Forex<br>in <span class="lime">3 Simple Steps</span></h2>
+      <p class="final-cta-desc">Join 600,000+ traders worldwide. Open a free account in under 5 minutes — no commitment required.</p>
+
+      <div class="cta-steps">
+        <div class="cta-step">
+          <div class="step-num">1</div>
+          <span class="step-label">Register Free Account</span>
+        </div>
+        <div class="cta-step">
+          <div class="step-num">2</div>
+          <span class="step-label">Verify & Deposit $50</span>
+        </div>
+        <div class="cta-step">
+          <div class="step-num">3</div>
+          <span class="step-label">Start Trading MT5</span>
+        </div>
+      </div>
+
+      <div class="cta-box">
+        <a href="https://my.vestrado.com/register/" class="btn-mega">Create Free Account →</a>
+        <a href="https://my.vestrado.com/register/" class="demo-link">Or try a free Demo account first</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer class="lp-footer">
+  <div class="footer-inner">
+    <div class="footer-logo-row">
+      <div class="logo">
+        <img src="https://vestrado.com/wp-content/uploads/2024/08/2024-VTR-logo-x2.png" alt="Vestrado" style="height:30px; filter: brightness(1.1);">
+      </div>
+      <div class="footer-regs">
+        <span class="reg-badge">CySEC Licensed</span>
+        <span class="reg-badge">MiFID II Compliant</span>
+        <span class="reg-badge">SSL Secured</span>
+        <span class="reg-badge">Segregated Funds</span>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Risk Warning:</strong> CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. <strong>76.4% of retail investor accounts lose money when trading CFDs with this provider.</strong> You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money. Trading leveraged products may not be suitable for all investors. Past performance is not indicative of future results. Do not invest more than you can afford to lose.
+      <br><br>
+      <strong>Regulatory Information:</strong> Vestrado is operated by Vestrado Ltd, authorized and regulated by the Cyprus Securities and Exchange Commission (CySEC). Vestrado Ltd complies with the Markets in Financial Instruments Directive (MiFID II). Registered office: Cyprus. The information on this website is not directed at residents of the United States, Canada, or any country where local laws or regulations would prohibit such access or use.
+      <br><br>
+      © 2025 Vestrado Ltd. All rights reserved. | <a href="https://vestrado.com/privacy-policy/">Privacy Policy</a> | <a href="https://vestrado.com/terms-conditions/">Terms & Conditions</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════
+     STICKY MOBILE CTA
+══════════════════════════════════ -->
+<div class="mobile-cta-bar">
+  <a href="https://my.vestrado.com/register/" class="btn-primary">Start Trading – Open Free Account →</a>
+</div>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── LIVE TICKER SIMULATION ─────────────────────── */
+const priceData = {
+  p2: { val: 1.26831, dp: 5 },
+  p3: { val: 149.421, dp: 3 },
+  p4: { val: 0.65187, dp: 5 },
+  p5: { val: 1.37259, dp: 5 }
+};
+const changeData = { c2: -.08, c3: .21, c4: -.05, c5: .07 };
+
+// Hero main price
+let heroPrice = 1.08542;
+let heroChange = 0.12;
+
+function updateTicker() {
+  // Hero price
+  heroPrice = Math.max(0.0001, heroPrice + (Math.random() - 0.5) * 0.0003);
+  heroChange += (Math.random() - 0.5) * 0.02;
+  const heroPriceEl = document.getElementById('hero-price');
+  const heroChangeEl = document.getElementById('hero-change');
+  if (heroPriceEl) heroPriceEl.textContent = heroPrice.toFixed(5);
+  if (heroChangeEl) {
+    heroChangeEl.textContent = (heroChange >= 0 ? '+' : '') + heroChange.toFixed(2) + '%';
+    heroChangeEl.style.color = heroChange >= 0 ? 'var(--lime)' : 'var(--red)';
+    heroChangeEl.style.borderColor = heroChange >= 0 ? 'rgba(154,234,0,0.25)' : 'rgba(255,68,68,0.25)';
+    heroChangeEl.style.background = heroChange >= 0 ? 'rgba(154,234,0,0.12)' : 'rgba(255,68,68,0.12)';
+  }
+
+  // Mini tickers
+  Object.keys(priceData).forEach(id => {
+    const p = priceData[id];
+    p.val = Math.max(0.0001, p.val + (Math.random() - 0.5) * 0.0003);
+    const el = document.getElementById(id);
+    if (el) el.textContent = p.val.toFixed(p.dp);
+  });
+
+  Object.keys(changeData).forEach(id => {
+    changeData[id] += (Math.random() - 0.5) * 0.02;
+    const el = document.getElementById(id);
+    if (el) {
+      const v = changeData[id];
+      const isUp = v >= 0;
+      el.textContent = (isUp ? '+' : '') + v.toFixed(2) + '%';
+      el.className = 'trm-change ' + (isUp ? 'up' : 'down');
+    }
+  });
+}
+setInterval(updateTicker, 1800);
+
+/* ─── ANIMATED COUNTERS ──────────────────────────── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+  const startVal = 0;
+
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(startVal + (target - startVal) * eased);
+    el.textContent = target >= 1000 ? current.toLocaleString() + suffix : current + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ─── INTERSECTION OBSERVER (reveal + counters) ──── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.counted) {
+      e.target.dataset.counted = '1';
+      animateCounter(e.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+/* ─── SMART STICKY HEADER (mobile only) ─────────── */
+(function () {
+  const header = document.querySelector('.lp-header');
+  if (!header) return;
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  let headerH = header.offsetHeight;
+  const threshold = 10;
+
+  function updateHeader() {
+    if (window.innerWidth > 768) {
+      header.classList.remove('header-hidden');
+      return;
+    }
+    const y = window.scrollY;
+    if (y > lastScrollY + threshold && y > headerH) {
+      header.classList.add('header-hidden');
+    } else if (y < lastScrollY - threshold || y <= 0) {
+      header.classList.remove('header-hidden');
+    }
+    lastScrollY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(updateHeader); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', () => { headerH = header.offsetHeight; updateHeader(); });
+  updateHeader();
+})();
+
+/* ─── STAGGER REVEAL DELAYS ─────────────────────── */
+document.querySelectorAll('.benefits-grid .reveal, .trust-grid .reveal, .testimonials-grid .reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 3) * 0.1 + 's';
+});
+</script>
+</body>
+</html>
